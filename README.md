@@ -41,7 +41,7 @@ Version 1 is a documentation project. Game implementation, pipeline configuratio
 
 ## Current Status
 
-The [adoption case study](devops-adoption-plan.md) documents the fictional scenario, current delivery problems, and proposed shared ownership and collaboration practices. Restart connects team practices to possible player impact. Detailed small-change examples, the delivery workflow, measurement definitions, and final review are pending.
+The [adoption case study](devops-adoption-plan.md) documents the fictional scenario, delivery problems, proposed collaboration practices, and examples of small batches, MVP, BDD, and TDD. Restart connects the development examples to player impact; the first playable level tests the game's value hypothesis. The delivery workflow, measurement definitions, gradual adoption approach, and final review are pending.
 
 The deliverables are this README and the companion case study, which will develop through subsequent revisions.
 
@@ -52,3 +52,4 @@ The deliverables are this README and the companion case study, which will develo
 | October 18, 2026 | Created the repository and documented the scenario, delivery problems, and version 1 scope. |
 | October 18, 2026 | Added the scenario and delivery problem analysis, including possible player impact and the Restart example. |
 | October 18, 2026 | Proposed collaboration, clear follow-up responsibilities, shared release knowledge, and learning practices linked to the delivery problems. |
+| October 18, 2026 | Added a focused Restart change, a playable MVP experiment, a BDD scenario, and a conceptual TDD cycle. |

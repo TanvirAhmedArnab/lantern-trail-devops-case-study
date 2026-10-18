@@ -126,4 +126,63 @@ A learning approach encourages people to report concerns promptly. It still requ
 | Release knowledge concentrated in one person | Maintained release instructions and a trained backup | Reduce waiting and missed preparation steps |
 | Player feedback shared privately | Shared issue record with a named coordinator | Make reports actionable and follow-up visible |
 
-These intended effects are hypotheses, not achieved improvements. The next sections will develop the small-change examples, delivery workflow, and measurement plan used to assess them.
+These intended effects are hypotheses, not achieved improvements. Concrete examples below show how the team could put earlier feedback into practice.
+
+## Small Batches and Learning Examples
+
+### Small Batches Keep Feedback Close to the Change
+
+A batch is the amount of work accumulated before it is checked or passed to the next stage. For Lantern Trail, a large batch could combine Restart, several new levels, a menu redesign, and new puzzle objects before anyone tries the integrated game. A failure would then have many possible sources.
+
+Instead, the team would take one useful change through discussion, implementation, review, and verification: Restart restores the player and existing movable puzzle objects in the current level. New levels and menu redesign would remain separate. This slice includes the behaviour and the checks needed to assess it; it is not merely a button graphic or an isolated reset function that players cannot use.
+
+The team could review an early contribution before the whole feature is ready, but should distinguish that technical feedback from a usable player-facing increment. Smaller batches do not justify skipping verification or publishing incomplete behaviour. Their intended benefit is less waiting before discovering a problem, not a guaranteed reduction in total effort.
+
+### The MVP Tests the Puzzle's Value
+
+A minimum viable product, or MVP, is the smallest practical experiment that tests a belief about value to users. For this scenario, the hypothesis is: players can understand the central puzzle interaction and enjoy solving it enough to want another level.
+
+The proposed experiment is one playable level with simple visuals, movement, one puzzle interaction, an exit, and reliable Restart. Restart supports repeated attempts; it cannot test the game's value on its own. Extra levels, polished menus, online accounts, and a broad feature set are unnecessary for this first question.
+
+Before the playtest, the team would agree to observe where players need help, whether they can retry without confusion, and whether their actions and comments suggest interest in another puzzle. They would ask what players understood and found frustrating. Finishing the level or saying "yes" to another level would be useful feedback, not conclusive proof of demand.
+
+If players struggle to understand the interaction, the team would revise and test it again rather than immediately adding content. If the experience appears promising, they could continue with another small experiment. No playtest has been conducted and no result is claimed here.
+
+### BDD Makes Restart Expectations Shared and Observable
+
+Behaviour Driven Development, or BDD, starts with a conversation about behaviour that matters to the user. Design, programming, and testing perspectives would clarify what "starting state" includes before implementation. For this first level, the agreed example concerns the player's position and movable puzzle objects' positions; additional state would need explicit discussion if introduced later.
+
+Gherkin expresses the example in a readable Given/When/Then structure:
+
+```gherkin
+Scenario: Retry the current puzzle from its starting arrangement
+  Given the player has moved from the current level's starting position
+    And the player has moved puzzle objects from their starting positions
+  When the player selects Restart
+  Then the player returns to the current level's starting position
+    And each movable puzzle object returns to its starting position
+    And the player can attempt the same level again
+```
+
+Given describes the starting situation, When identifies the action, and Then describes the expected result. The example exposes the original misunderstanding: resetting only the player would not meet the agreed behaviour. These written criteria are a shared expectation, not evidence of an executed test; automation would require supporting test code.
+
+### TDD Guides One Small Implementation Rule
+
+Test Driven Development, or TDD, uses an executable test to guide implementation through Red, Green, and Refactor. A small rule within Restart could be that resetting a puzzle object restores its saved starting position. The following is a proposed development sequence, not code or a test run performed in this project:
+
+1. **Red:** Write a test that creates an object with a known starting position, moves it elsewhere, invokes its reset behaviour, and checks that its position equals the saved starting position. Run it and confirm that it fails because the required behaviour is missing, rather than because the test setup is broken.
+2. **Green:** Implement the smallest change needed to restore that position, then run the test and relevant existing tests. Avoid adding unrelated features to make this one rule pass.
+3. **Refactor:** Improve the code's structure if needed without changing its behaviour, then rerun the tests to check that it still works.
+
+Repeat the cycle for the next small rule. A passing object-reset test would not establish that the Restart button resets every object, resets the player, or leaves the level playable. Broader checks against the BDD example would still be needed, and playtesting would assess clarity and enjoyment.
+
+### How the Practices Work Together
+
+| Practice | Lantern Trail application | Feedback it provides |
+|---|---|---|
+| MVP | Try one playable puzzle before expanding the game | Whether the core experience appears understandable and valuable |
+| Small batches | Take the focused Restart feature through review and verification | Whether one useful change works before unrelated work accumulates |
+| BDD | Agree that Restart restores the player and puzzle objects | Whether the team shares a testable expectation of player behaviour |
+| TDD | Develop an object-reset rule through a failing test, minimal implementation, and refactoring | Whether that specific implementation rule meets its test |
+
+The practices complement one another but answer different questions. None alone guarantees a good game or a safe release. The remaining sections will describe the proposed delivery and recovery workflow, measurement definitions, and gradual adoption approach.
