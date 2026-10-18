@@ -41,12 +41,13 @@ Version 1 is a documentation project. Game implementation, pipeline configuratio
 
 ## Current Status
 
-The game scenario and initial problem focus are established. The repository and project overview are in place. The detailed adoption plan, workflow diagram, measurement definitions, and final review are pending.
+The [adoption case study](devops-adoption-plan.md) documents the fictional scenario and current delivery problems, with Restart as a running example connecting team practices to possible player impact. Proposed practices, the delivery workflow, measurement definitions, and final review are pending.
 
-The planned deliverables are this README and a companion `devops-adoption-plan.md` case study, to be added as the analysis develops.
+The deliverables are this README and the companion case study, which will develop through subsequent revisions.
 
 ## Project History
 
 | Date | Milestone |
 |---|---|
 | October 18, 2026 | Created the repository and documented the scenario, delivery problems, and version 1 scope. |
+| October 18, 2026 | Added the scenario and delivery problem analysis, including possible player impact and the Restart example. |
