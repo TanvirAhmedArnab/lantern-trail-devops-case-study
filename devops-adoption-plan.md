@@ -103,7 +103,7 @@ Smaller contributions give reviewers less unrelated work to understand and can e
 
 The member with release expertise would document the essential preparation and verification steps, then work through them with a second team member. The record would identify the intended revision, packaged build, checks performed, and published version. Both would update it when the process changes.
 
-For the Restart correction, another member could check that the build intended for players contains the verified fix. This reduces dependence on memory and one person's availability while preserving release expertise. Backup responsibility would include training and appropriate publishing access, rather than assuming an unprepared colleague can release safely. Detailed release and recovery procedures will be developed in the workflow section.
+For the Restart correction, another member could check that the build intended for players contains the verified fix. This reduces dependence on memory and one person's availability while preserving release expertise. Backup responsibility would include training and appropriate publishing access, rather than assuming an unprepared colleague can release safely. The delivery and recovery workflow below describes how the team would use this shared release knowledge.
 
 ### Keep Player Reports Available to the Team
 
@@ -185,4 +185,70 @@ Repeat the cycle for the next small rule. A passing object-reset test would not 
 | BDD | Agree that Restart restores the player and puzzle objects | Whether the team shares a testable expectation of player behaviour |
 | TDD | Develop an object-reset rule through a failing test, minimal implementation, and refactoring | Whether that specific implementation rule meets its test |
 
-The practices complement one another but answer different questions. None alone guarantees a good game or a safe release. The remaining sections will describe the proposed delivery and recovery workflow, measurement definitions, and gradual adoption approach.
+The practices complement one another but answer different questions. None alone guarantees a good game or a safe release. The following workflow connects these practices to delivery and recovery. Measurement definitions and the gradual adoption approach remain to be developed.
+
+## Proposed Delivery and Recovery Workflow
+
+This workflow applies continuous integration and continuous delivery to a downloadable Windows game. It is a proposal, not an implemented pipeline. It does not require a cloud service or a particular automation tool. The team would first make the steps repeatable and then consider automating suitable checks.
+
+### Continuous Integration Checks the Combined Game Early
+
+Continuous integration, or CI, means bringing small changes into the shared code frequently and checking that they work together. For Restart, the developer would share a focused contribution, obtain review, and integrate it without waiting for unrelated levels or menus to be finished. The combined revision would be built and checked promptly. Review and integration checks have different purposes: review examines the proposed change; the checks examine the resulting shared version.
+
+A build failure or failing reset test would be visible to the team and investigated before more work accumulates on top of it. Frequent merging without verification would not solve the late-integration problem. Automated checks could make feedback repeatable, while manual playtesting would still examine whether players can understand and retry the puzzle.
+
+### Continuous Delivery Keeps a Verified Build Ready
+
+Continuous delivery means keeping changes in a state where they can be released reliably when the team chooses. The team would package an identified build, verify that package, and retain the information needed to publish it. A human release decision would consider the checks, known limitations, and player impact.
+
+Continuous deployment goes further by automatically publishing changes that pass the defined gates. It is not proposed for this first adoption step. For Lantern Trail, publishing means making a downloadable build available to players; it does not mean deploying an online game server. A successful source-level test alone would not justify publication.
+
+### Flow From Shared Expectation to Player Feedback
+
+```mermaid
+flowchart TD
+    A[Agree Restart behaviour and checks] --> B[Make a small contribution and review it]
+    B --> C[Integrate frequently and check the combined revision]
+    C --> D{Build and relevant checks pass?}
+    D -->|No| B
+    D -->|Yes| E[Package an identified candidate build]
+    E --> F[Check the packaged game and release information]
+    F --> G{Ready for players?}
+    G -->|No| B
+    G -->|Yes| H[Human decision to publish]
+    H --> I[Publish that verified build]
+    I --> J[Observe playtests and shared player reports]
+    J --> K{Serious release problem?}
+    K -->|Yes| L[Coordinate recovery and communicate]
+    L --> M[Verify recovery and investigate the cause]
+    M --> A
+    K -->|No| N[Use feedback to choose the next small change]
+    N --> A
+```
+
+A candidate is a build being considered for release, not a promise that it will be published. A concern at the release decision can lead to more investigation or deferral; it does not require rushing a code change. If the diagram cannot be rendered, its sequence is: agree, review, integrate, check, package, verify, decide, publish, observe, and recover or learn.
+
+### Checks and Responsibilities Before Publication
+
+| Stage | Evidence the team would seek | Follow-through |
+|---|---|---|
+| Behaviour agreement | Restart example covers the player and movable objects | Change coordinator brings design, programming, and testing perspectives together |
+| Integration | Identified shared revision builds and passes relevant tests | Contributor investigates failures with help; the team keeps the result visible |
+| Package verification | The packaged game launches, opens the level, and meets the Restart example | Testing contributor records the build identifier and results, including manual checks |
+| Release decision | Known limitations reviewed; release information and recovery option understood | Named release coordinator checks readiness with a trained backup |
+| Publication and observation | Download points to the intended build; reports identify the affected version | Coordinator verifies availability and keeps follow-up visible to the team |
+
+The packaged-game check matters because an editor or source test can pass while the distributed package is incomplete or contains the wrong revision. The team would keep the source revision, build identifier, check results, and publication record connected. A backup should be able to follow the documented steps rather than depend on the coordinator's memory.
+
+### Hypothetical Restart Failure and Recovery
+
+Assume a published update introduces a defect that leaves one movable obstacle in its moved position after Restart. A player cannot retry the level reliably. This is an imagined incident used to examine the workflow, not an observed failure.
+
+1. **Make the report actionable.** The report coordinator records the affected build, reproduction steps, expected reset, and actual result in the shared issue. Private player contact information stays out of public records. The team confirms the problem in that package and assesses its impact.
+2. **Coordinate a response.** The release coordinator and backup identify which download is affected, warn players through the appropriate release channel, and pause promotion of the broken build while recovery is assessed. The issue names who is following the response through.
+3. **Check the recovery choice.** The team considers restoring the previous known-good download. They first verify that it launches, supports the affected level, and remains compatible with any settings or saved data involved. Replacing the download does not automatically replace copies players already installed. Players need clear version and installation guidance, including any data precautions.
+4. **Restore or correct safely.** If the previous build is suitable, the coordinator makes that verified build available and explains the temporary restoration. If it is incompatible or shares the defect, the team prepares a focused correction through review, integration, packaging, and verification. A prior build is an option, not an assumed safe rollback.
+5. **Verify the player-facing result.** A team member obtains the offered download and repeats the failing Restart sequence. The record identifies the recovered build and when it became available. Communication distinguishes availability of a recovery build from confirmation that every player has installed it. The affected artifact and investigation record are retained for diagnosis without promoting it as the recommended download.
+6. **Learn and follow up.** The team investigates whether a missing reset rule, an integration interaction, an incomplete test, or a packaging mistake allowed the defect through. They add a regression check for the confirmed cause, verify the correction, and assign ownership for any process improvement. Blameless investigation still requires visible follow-through.
+
+Restoring a usable build addresses immediate player impact; correcting the underlying cause prevents relying indefinitely on restoration. Neither action proves that the adoption plan has improved delivery. No build, automated check, publication, recovery exercise, or elapsed recovery time has been produced or measured in this documentation project.
