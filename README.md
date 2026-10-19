@@ -29,7 +29,7 @@ The initial focus is **earlier testing and agreement on expected behaviour**. Th
 
 ## Version 1 Scope
 
-The adoption plan will address:
+The adoption plan covers:
 
 - Shared ownership, collaboration, and learning from failure.
 - Small batches, reviewed contributions, and early player feedback.
@@ -41,9 +41,9 @@ Version 1 is a documentation project. Game implementation, pipeline configuratio
 
 ## Current Status
 
-The [adoption case study](devops-adoption-plan.md) documents the scenario, delivery problems, collaboration practices, and examples of small batches, MVP, BDD, and TDD. It now includes a proposed CI and continuous delivery workflow, package verification, a human publication decision, and a hypothetical Restart recovery example. No game or pipeline has been implemented. Measurement definitions, the gradual adoption approach, and final review remain pending.
+**Version 1 documentation is complete.** The [adoption case study](devops-adoption-plan.md) covers the fictional delivery problems, collaboration practices, small-batch/MVP/BDD/TDD examples, delivery and recovery workflow, four defined delivery measures, and a proposed four-week adoption pilot. It includes course references and explicit limitations.
 
-The deliverables are this README and the companion case study, which will develop through subsequent revisions.
+No game, pipeline, pilot, or operational measurement has been implemented or executed. The deliverables are this README and the companion case study; the proposal remains open to revision as evidence becomes available.
 
 ## Project History
 
@@ -54,3 +54,4 @@ The deliverables are this README and the companion case study, which will develo
 | October 18, 2026 | Proposed collaboration, clear follow-up responsibilities, shared release knowledge, and learning practices linked to the delivery problems. |
 | October 18, 2026 | Added a focused Restart change, a playable MVP experiment, a BDD scenario, and a conceptual TDD cycle. |
 | October 19, 2026 | Added the proposed delivery and feedback flow, CI/delivery distinctions, release checks, and a hypothetical Restart recovery example. |
+| October 19, 2026 | Completed version 1 documentation with measurement definitions, a proposed adoption pilot, course references, and a consistency/scope review. |

@@ -34,7 +34,7 @@ The scenario assumes four working habits that could delay feedback or make relea
 
 **Player impact:** If the incomplete reset reaches a published build, players could remain stuck with puzzle objects in an unusable arrangement even after restarting. That interrupts experimentation and may make the game feel unfair or unreliable. If the team delays publication instead, players wait longer for the intended update.
 
-**Reasoning:** The issue is not that a particular person failed to "test harder." The process allowed different expectations to remain undiscovered. Later sections will consider how shared examples and earlier verification could address that gap.
+**Reasoning:** The issue is not that a particular person failed to "test harder." The process allowed different expectations to remain undiscovered. The shared examples and earlier verification proposed below address that gap.
 
 ### Late Integration of Changes
 
@@ -185,7 +185,7 @@ Repeat the cycle for the next small rule. A passing object-reset test would not 
 | BDD | Agree that Restart restores the player and puzzle objects | Whether the team shares a testable expectation of player behaviour |
 | TDD | Develop an object-reset rule through a failing test, minimal implementation, and refactoring | Whether that specific implementation rule meets its test |
 
-The practices complement one another but answer different questions. None alone guarantees a good game or a safe release. The following workflow connects these practices to delivery and recovery. Measurement definitions and the gradual adoption approach remain to be developed.
+The practices complement one another but answer different questions. None alone guarantees a good game or a safe release. The following workflow connects these practices to delivery and recovery. The measurement and adoption sections define how the team would evaluate the proposal.
 
 ## Proposed Delivery and Recovery Workflow
 
@@ -252,3 +252,69 @@ Assume a published update introduces a defect that leaves one movable obstacle i
 6. **Learn and follow up.** The team investigates whether a missing reset rule, an integration interaction, an incomplete test, or a packaging mistake allowed the defect through. They add a regression check for the confirmed cause, verify the correction, and assign ownership for any process improvement. Blameless investigation still requires visible follow-through.
 
 Restoring a usable build addresses immediate player impact; correcting the underlying cause prevents relying indefinitely on restoration. Neither action proves that the adoption plan has improved delivery. No build, automated check, publication, recovery exercise, or elapsed recovery time has been produced or measured in this documentation project.
+
+## Measurement Plan
+
+The team would use the course's four delivery measures to guide improvement, not rank individuals. The definitions below adapt the course vocabulary to a downloadable game. In particular, lead time follows the course's idea/request-to-release interpretation; it is not a claim to use a different framework's commit-to-deployment definition.
+
+### Define Events Before Counting
+
+A player-facing release is an identified build made available through the normal player download channel, including a corrective release or restoration. Internal test packages do not count. Reposting the same unchanged download without a release event does not count. One release can contain several changes; changes and releases need separate identifiers.
+
+For this pilot, a qualifying release failure is a newly introduced defect that prevents launch, prevents completing the playable level, or makes Restart unusable and requires urgent correction or restoration. Cosmetic issues remain recorded but do not enter this particular failure rate. These are proposed team counting rules, not universal definitions of acceptable quality.
+
+| Measure | Start/end or counting rule | Unit and source | Decision it supports |
+|---|---|---|---|
+| Mean lead time | From recording a valid change request to first availability of a verified player-facing build containing it; include waiting | Mean elapsed calendar hours across released requests; shared issue and release record | Investigate delays in clarification, integration, verification, or publication |
+| Release frequency | Count qualifying player-facing release events during the window | Releases per week; versioned publication record | Assess whether the team can deliver useful changes when needed, alongside reliability |
+| Change failure rate | Failed releases divided by all qualifying releases, multiplied by 100; count each failed release once even if several reports concern it | Percentage plus raw numerator/denominator; release records linked to confirmed failures | Examine missing checks and causes of harmful changes |
+| Mean time to recovery | From the team's first detection of a qualifying failure to availability of a verified corrected or compatible previous build, with player guidance | Mean elapsed calendar hours across recovered incidents; incident and release timestamps | Find slow investigation, decision, verification, or publication steps |
+
+Recovery-build availability is the endpoint for this exercise; it does not imply that every player has downloaded it. If an earlier detection time is established during investigation, correct the incident record visibly. Preserve timestamps and the definition used rather than silently improving the numbers.
+
+### Window, Baseline, and Missing Data
+
+The proposed observation window is four weeks. Before the pilot, the coordinator would seek a comparable four-week baseline from existing issue, release, and incident records. If those records do not exist, mark the baseline **unavailable** and use the first prospective window to establish one. Do not reconstruct precise timestamps from guesses or withhold useful changes just to collect a baseline.
+
+At each weekly review, show counts, individual durations, and unresolved cases as well as averages. Requests still waiting for release retain their age and status outside the completed-request mean. Incidents still awaiting recovery remain visible outside the recovered-incident mean. This prevents a fast average from hiding unfinished work.
+
+Use **N/A** for lead time when no requests were released, failure rate when no releases occurred, or recovery time when no incidents were recovered. With no releases, release frequency is zero. With releases but no qualifying failures, the observed failure rate is zero for that window; it is not proof that the process cannot fail. Late-discovered failures should be linked back to their release and the affected window clearly revised.
+
+The coordinator and backup would keep the records current; the whole team would interpret them. Release count alone could reward unnecessary publication, while commit counts or individual ticket totals could discourage collaboration. Discuss the measures together with player reports and the MVP playtest observations. Delivery speed cannot establish whether the puzzle is enjoyable.
+
+### Use Evidence to Choose an Action
+
+If Restart waits mainly for release expertise after verification, try having the trained backup follow the documented release steps. If resets repeatedly fail after publication, investigate the behaviour agreement and packaged-game checks. If recovery is slow, examine which decision or compatibility check caused waiting. These are conditional responses, not findings about this fictional team.
+
+The review would also ask whether people can raise concerns safely, find current release information, and obtain help across roles. Record specific obstacles and a follow-up owner instead of inventing culture scores. Set a numeric improvement target only after observing the baseline and discussing a realistic change; no benchmark or achieved gain is claimed here.
+
+## Gradual Adoption and Review
+
+The following four-week pilot is a proposed learning sequence, not an executed rollout or an IBM-prescribed schedule. The small stable team would retain responsibility from behaviour discussion through player feedback, with named coordinators and specialist help rather than creating another handoff team.
+
+| Period | Small adoption step | Evidence to discuss before proceeding |
+|---|---|---|
+| Week 1 | Agree the player outcome and Restart example; make work/reports visible; define measurement events and review baseline availability | Shared expectation, named follow-up responsibilities, and honest record gaps |
+| Week 2 | Take one focused Restart contribution through review and integration; use the conceptual BDD/TDD approach and verify the combined game | Review findings, relevant executed checks if implemented, and remaining uncertainty |
+| Week 3 | Rehearse documented packaging and release steps with the backup; assess a recovery option; identify one repetitive check suitable for automation | Ability to repeat the steps, package identity, compatibility concerns, and a reason for the selected automation |
+| Week 4 | If readiness checks support publication, gather player feedback; review the records and team experience; choose one next improvement | Actual observations, open failures/waiting work, player understanding, and an owned follow-up |
+
+The calendar is not a publication deadline. If verification or recovery readiness is insufficient, defer publication and address the gap. A recovery rehearsal would use a controlled test setting, not deliberately distribute a broken build to players. Playtest findings may also show that the puzzle needs revision before expansion.
+
+At the review, retain a practice if evidence and team experience support it, revise it if it creates avoidable work or misses a risk, and stop an experiment that does not help. Repeat the measurement definitions consistently in any later comparable window. One short pilot with few releases cannot establish causation or lasting improvement; explain other changes in workload or scope before interpreting differences.
+
+## Version 1 Conclusion and Limitations
+
+The proposal addresses late misunderstandings through shared examples and early testing, late integration through small reviewed changes, concentrated release knowledge through repeatable steps and a trained backup, and delayed feedback through shared reports and clear follow-up. Measurement and review would test whether those changes help the team deliver a puzzle players can reliably retry.
+
+Version 1 completes the documentation case study. It does not implement the game, automated tests, delivery pipeline, or release process, and it contains no collected baseline, playtest results, recovery timings, or measured improvements. Team size, game behaviour, incidents, and the pilot sequence are scenario assumptions. Actual adoption would require the team's review of feasibility, access, compatibility, and player needs. Cloud deployment and detailed pipeline tooling remain outside this introductory study.
+
+## Course References
+
+The concepts below come from IBM's [Introduction to DevOps](https://www.coursera.org/learn/intro-to-devops). The Lantern Trail scenario, game-specific counting rules, and pilot are original applications of those concepts, not course requirements.
+
+- Collaboration and ownership: [Social Coding Principles](https://www.coursera.org/learn/intro-to-devops/lecture/areFT/social-coding-principles) and [Everyone Is Responsible for Success](https://www.coursera.org/learn/intro-to-devops/lecture/N5Juw/everyone-is-responsible-for-success).
+- Learning through small changes: [Working in Small Batches](https://www.coursera.org/learn/intro-to-devops/lecture/pVIqp/working-in-small-batches) and [Minimum Viable Product](https://www.coursera.org/learn/intro-to-devops/lecture/JnCgF/minimum-viable-product).
+- Shared behaviour and implementation feedback: [Behaviour Driven Development](https://www.coursera.org/learn/intro-to-devops/lecture/mGgbZ/behavior-driven-development) and [Test Driven Development](https://www.coursera.org/learn/intro-to-devops/lecture/McUML/test-driven-development).
+- Delivery and recovery foundations: [Continuous Integration](https://www.coursera.org/learn/intro-to-devops/lecture/QAnmv/continuous-integration), [Continuous Delivery](https://www.coursera.org/learn/intro-to-devops/lecture/SUj72/continuous-delivery), and [Designing for Failure](https://www.coursera.org/learn/intro-to-devops/lecture/rhkkP/designing-for-failure).
+- Measurement and incentives: [Rewarding for A While Hoping for B](https://www.coursera.org/learn/intro-to-devops/lecture/xwx1h/rewarding-for-a-while-hoping-for-b), [Vanity Metrics vs. Actionable Metrics](https://www.coursera.org/learn/intro-to-devops/lecture/Zj5Ar/vanity-metrics-vs-actionable-metrics), and [How to Measure Your Culture](https://www.coursera.org/learn/intro-to-devops/lecture/TeqB1/how-to-measure-your-culture).
